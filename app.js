@@ -118,7 +118,7 @@ class App{
 		loader.load(
 			// resource URL .
 			`chair${id}.glb`,
-			// called when the resource is loaded
+			// called when the resource is loaded .
 			function ( gltf ) {
 
 				self.scene.add( gltf.scene );
