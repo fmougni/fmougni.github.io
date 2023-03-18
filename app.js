@@ -55,7 +55,7 @@ class App{
     setupXR(){
         this.renderer.xr.enabled = true;
         
-        if ( 'xr' in navigator ) {
+       /* if ( 'xr' in navigator ) {
 
 			navigator.xr.isSessionSupported( 'immersive-ar' ).then( ( supported ) => {
 
@@ -67,7 +67,7 @@ class App{
                 
 			} );
             
-		} 
+		} */
         
         const self = this;
 
