@@ -25,8 +25,7 @@ class App{
         
             // Initialise le polyfill WebXR
             const polyfill = new WebXRPolyfill();
-           
-            
+    
             const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
             ambient.position.set(0.5, 1, 0.25);
             this.scene.add(ambient);
@@ -60,12 +59,12 @@ class App{
 
 			navigator.xr.isSessionSupported( 'immersive-ar' ).then( ( supported ) => {
 
-                if (supported){
+               
                     const collection = document.getElementsByClassName("ar-button");
                     [...collection].forEach( el => {
                         el.style.display = 'block';
                     });
-                }
+                
 			} );
             
 		} 
@@ -157,8 +156,9 @@ class App{
         let currentSession = null;
         const self = this;
         
-        const sessionInit = { requiredFeatures: [ 'hit-test' ] };
-        
+        //const sessionInit = { requiredFeatures: [ 'hit-test' ] };
+        const sessionInit = { requiredFeatures: [ 'hit-test', 'local-floor' ] };
+
         
         function onSessionStarted( session ) {
 
