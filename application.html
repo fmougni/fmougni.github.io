@@ -34,12 +34,59 @@
         document.addEventListener("DOMContentLoaded", function(){
             const app = new App();
             window.app = app;
+
         });
     </script>
+    <script>
+    async function fetchProducts() {
+      const token = localStorage.getItem('token');
+    
+      try {
+        const response = await fetch(`https://aback-legend-hamster.glitch.me/produits?token_Authentification=${token}`);
+        if (!response.ok) {
+          throw new Error('Erreur lors de la récupération des produits');
+        }
+    
+        const produits = await response.json();
+    
+        const row = document.querySelector('#Listproduct');
+        row.innerHTML = '';
+        produits.forEach((produit) => {
+          const col = document.createElement('div');
+          col.className = 'col-lg-4 col-md-6 mb-4';
+           
+          const card = `
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="${produit.media_urls.split(',')[1]}" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">${produit.produit_nom}</a>
+                </h4>
+                <h5>$${produit.produit_prix}</h5>
+                <p class="card-text">${produit.produit_description}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <button class="ar-button" onclick="window.app.showChair(${produit.media_urls.split(',')[0]});"><i class="fas fa-camera"></i></button>
+              </div>
+            </div>
+          `;
+    
+          col.innerHTML = card;
+          row.appendChild(col);
+        });
+      } catch (error) {
+        console.error('Erreur:', error.message);
+      }
+    }
+    
+    // Appeler fetchProducts au chargement de la page
+    document.addEventListener('DOMContentLoaded', fetchProducts);
+  </script>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#"><img src="assets/ar-shop/logo-nav.jpg"/> Furniture.com</a>
+      <a class="navbar-brand" href="#">PayeTonKawa.com</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -51,7 +98,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Basket</a>
+            <a id="deconnexion" class="nav-link" href="#">Deconnexion</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Support</a>
@@ -63,7 +110,6 @@
       </div>
     </div>
   </nav>
-
   <!-- Page Content -->
   <div class="container">
 
@@ -71,11 +117,11 @@
 
       <div class="col-lg-3">
 
-        <h1 class="my-4">Furniture.com</h1>
+        <h1 class="my-4">PayetonKawa</h1>
         <div class="list-group">
           <a href="#" class="list-group-item">Office</a>
           <a href="#" class="list-group-item">Home</a>
-          <a href="#" class="list-group-item">Resturant</a>
+          <a href="#" class="list-group-item">Help</a>
         </div>
 
       </div>
@@ -91,13 +137,13 @@
           </ol>
           <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-              <img class="d-block img-fluid" src="assets/ar-shop/banner1.jpg" alt="First slide">
+              <img class="d-block img-fluid" src="assets/ar-shop/coffee1.png" alt="First slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="assets/ar-shop/banner2.jpg" alt="Second slide">
+              <img class="d-block img-fluid" src="assets/ar-shop/coffee3.png" alt="Second slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="assets/ar-shop/banner3.jpg" alt="Third slide">
+              <img class="d-block img-fluid" src="assets/ar-shop/coffee7.png" alt="Third slide">
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -109,8 +155,8 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4">
+        <div class="row" id="Listproduct">
+          <!--<div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
               <a href="#"><img class="card-img-top" src="assets/ar-shop/coffee1.png" alt=""></a>
               <div class="card-body">
@@ -209,7 +255,7 @@
                 <button class="ar-button" onclick="window.app.showChair(6);"><i class="fas fa-camera"></i></button>
               </div>
             </div>
-          </div>
+          </div> -->
 
         </div>
         <!-- /.row -->
@@ -234,7 +280,20 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+  
+    const deconnexionLink = document.getElementById('deconnexion');
 
+    deconnexionLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Supprimer le token du localStorage
+      localStorage.removeItem('token');
+      
+      // Rediriger vers la page de connexion
+      window.location.href = 'index.html';
+    });
+    </script>
 </body>
 
 </html>
