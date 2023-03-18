@@ -25,22 +25,7 @@ class App{
         
             // Initialise le polyfill WebXR
             const polyfill = new WebXRPolyfill();
-            //request permission
-            const requestPermissionButton = document.getElementById('requestPermissionButton');
-
-            requestPermissionButton.addEventListener('click', function () {
-              if (typeof DeviceMotionEvent.requestPermission === 'function') {
-                DeviceMotionEvent.requestPermission()
-                  .then(permissionState => {
-                    if (permissionState === 'granted') {
-                      window.addEventListener('devicemotion', () => {});
-                    }
-                  })
-                  .catch(console.error);
-              } else {
-                // handle regular non iOS 13+ devices
-              }
-            });
+           
             
             const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
             ambient.position.set(0.5, 1, 0.25);

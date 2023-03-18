@@ -77,6 +77,22 @@
           col.innerHTML = card;
           row.appendChild(col);
         });
+
+        const requestPermissionButton = document.getElementById('requestPermissionButton');
+
+requestPermissionButton.addEventListener('click', function () {
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    DeviceMotionEvent.requestPermission()
+      .then(permissionState => {
+        if (permissionState === 'granted') {
+          window.addEventListener('devicemotion', () => {});
+        }
+      })
+      .catch(console.error);
+  } else {
+    // handle regular non iOS 13+ devices
+  }
+});
       } catch (error) {
         console.error('Erreur:', error.message);
       }
@@ -295,6 +311,9 @@
       // Rediriger vers la page de connexion
       window.location.href = 'index.html';
     });
+
+  
+
     </script>
 </body>
 
