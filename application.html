@@ -27,7 +27,7 @@
 </head>
 
 <body>
-  <script src='https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js'></script>
+    <script src="https://unpkg.com/@webxr-polyfill/core@latest/dist/webxr-polyfill.min.js"></script>
     <script src="libs/fas.js"></script>
     <script type="module">
         import { App } from './app.js';
@@ -68,7 +68,6 @@
               </div>
               <div class="card-footer">
                 <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                <button id="requestPermissionButton">Autoriser l'accès au mouvement de l'appareil</button>
                 <button class="ar-button" onclick="window.app.showChair(${produit.media_urls.split(',')[0]});"><i class="fas fa-camera"></i></button>
               </div>
             </div>
@@ -77,22 +76,6 @@
           col.innerHTML = card;
           row.appendChild(col);
         });
-
-        const requestPermissionButton = document.getElementById('requestPermissionButton');
-
-requestPermissionButton.addEventListener('click', function () {
-  if (typeof DeviceMotionEvent.requestPermission === 'function') {
-    DeviceMotionEvent.requestPermission()
-      .then(permissionState => {
-        if (permissionState === 'granted') {
-          window.addEventListener('devicemotion', () => {});
-        }
-      })
-      .catch(console.error);
-  } else {
-    // handle regular non iOS 13+ devices
-  }
-});
       } catch (error) {
         console.error('Erreur:', error.message);
       }
@@ -311,9 +294,6 @@ requestPermissionButton.addEventListener('click', function () {
       // Rediriger vers la page de connexion
       window.location.href = 'index.html';
     });
-
-  
-
     </script>
 </body>
 
