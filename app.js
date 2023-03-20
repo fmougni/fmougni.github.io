@@ -1,34 +1,27 @@
 import * as THREE from '../../libs/three125/three.module.js';
 import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { RGBELoader } from '../../libs/three/jsm/RGBELoader.js';
+import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 
 class App{
 	constructor(){
-            const container = document.createElement("div");
-            document.body.appendChild(container);
+		const container = document.createElement( 'div' );
+		document.body.appendChild( container );
         
-            this.loadingBar = new LoadingBar();
-            this.loadingBar.visible = false;
+        this.loadingBar = new LoadingBar();
+        this.loadingBar.visible = false;
+
+		this.assetsPath = '../../assets/ar-shop/';
         
-            this.assetsPath = "../../assets/ar-shop/";
+		this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
+		this.camera.position.set( 0, 1.6, 0 );
         
-            this.camera = new THREE.PerspectiveCamera(
-              70,
-              window.innerWidth / window.innerHeight,
-              0.01,
-              20
-            );
-            this.camera.position.set(0, 1.6, 0);
-        
-            this.scene = new THREE.Scene();
-        
-            // Initialise le polyfill WebXR
-            const polyfill = new WebXRPolyfill();
-    
-            const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-            ambient.position.set(0.5, 1, 0.25);
-            this.scene.add(ambient);
+		this.scene = new THREE.Scene();
+
+		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+        ambient.position.set( 0.5, 1, 0.25 );
+		this.scene.add(ambient);
 			
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -55,19 +48,19 @@ class App{
     setupXR(){
         this.renderer.xr.enabled = true;
         
-       /* if ( 'xr' in navigator ) {
+        if ( 'xr' in navigator ) {
 
 			navigator.xr.isSessionSupported( 'immersive-ar' ).then( ( supported ) => {
 
-               
+                if (supported){
                     const collection = document.getElementsByClassName("ar-button");
                     [...collection].forEach( el => {
                         el.style.display = 'block';
                     });
-                
+                }
 			} );
             
-		} */
+		} 
         
         const self = this;
 
@@ -156,9 +149,8 @@ class App{
         let currentSession = null;
         const self = this;
         
-        //const sessionInit = { requiredFeatures: [ 'hit-test' ] };
-        const sessionInit = { requiredFeatures: [ 'hit-test', 'local-floor' ] };
-
+        const sessionInit = { requiredFeatures: [ 'hit-test' ] };
+        
         
         function onSessionStarted( session ) {
 
