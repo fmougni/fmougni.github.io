@@ -15,31 +15,9 @@ const signInForm = document.querySelector('.sign-in-form');
 // Gestionnaire d'événements pour le formulaire de connexion
 signInForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-
-  const email = signInForm.querySelector('input[type="email"]').value;
-  const mot_de_passe = signInForm.querySelector('input[type="password"]').value;
-  const token = signInForm.querySelector('#token').value;
-
-  try {
-    const response = await fetch('https://aback-legend-hamster.glitch.me/authentification', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, mot_de_passe }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Erreur lors de la connexion');
-    }
-
-    // Stocker le token dans le localStorage
-    localStorage.setItem('token', token);
-
     // Rediriger l'utilisateur vers la page app.html
-    window.location.href = 'application.html';
-  } catch (error) {
-    console.error('Erreur:', error.message);
-  }
-});
+    window.location.href = 'home.html';
+  });
 
 
 
